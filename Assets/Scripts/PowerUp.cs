@@ -5,7 +5,7 @@ public class PowerUp : MonoBehaviour
 {
     [SerializeField] GameObject Player; 
     public bool IsActive = false;
-    private bool hasDied = false; // Pour empêcher le respawn immédiat
+    private bool hasDied = false; 
     
     [Header("Positionnement")]
     [SerializeField] float DecallageX = 2.5f;
@@ -28,7 +28,6 @@ public class PowerUp : MonoBehaviour
         if (IsActive) return;
 
         Debug.Log("Allié appelé");
-        // ON NE TOUCHE PLUS AU SCORE ICI !
         
         UpdatePosition();
         IsActive = true;
@@ -40,29 +39,24 @@ public class PowerUp : MonoBehaviour
         IsActive = false;
     }
     
-    // Nouvelle fonction appelée quand il meurt
     public void OnAllyDeath()
     {
         IsActive = false;
-        hasDied = true; // On le marque comme mort pour ce tour
+        hasDied = true;
     }
     
     void Update()
     {
-        // 1. GESTION DE L'ACTIVATION
-        // On vérifie qu'il n'est pas mort durant ce tour (!hasDied)
-        if (GameManager.instance.caca && !IsActive && !hasDied)
+        if (GameManager.instance.valide && !IsActive && !hasDied)
         {
              ActivateAlly();
         }
-        else if (!GameManager.instance.caca)
+        else if (!GameManager.instance.valide)
         {
-            // Quand le bouton est relâché (tout le monde mort), on reset l'état
             DisableAlly();
             hasDied = false; 
         }
- 
-        // 2. GESTION DU TIR
+        
         if (IsActive)
         {
             HandleShooting();

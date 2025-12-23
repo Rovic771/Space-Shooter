@@ -17,13 +17,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float FireDelay = 0.2f;
     float LastShotTime;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         LastShotTime = -FireDelay;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         //gestion du mouvement

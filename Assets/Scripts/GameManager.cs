@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI scoretext;
     [SerializeField] GameObject gameOverUiObject;
     
-    public bool caca = false;     // Variable qui bloque le bouton
-    public int alliesVivants = 0; // Compteur officiel
+    public bool valide = false;     
+    public int alliesVivants = 0;
 
     private void Awake()
     {
@@ -18,46 +18,56 @@ public class GameManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    // ... tes autres fonctions (Restart, GoNext, etc.) ...
+    public void GoNextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    
 
     public void IncrementScore()
     {
         score += 25;
-        scoretext.text = "Score :" + score.ToString();
+        scoretext.text = score.ToString();
     }
     
     public void ShowGameOverUi()
     {
         gameOverUiObject.SetActive(true);
     }
-
-    // APPELÉE PAR LE BOUTON
+    
     public void ActiveAlly()
     {
-        // On vérifie ici si on a assez de points pour appeler l'escadron
         if (score >= 200) 
         {
-            score -= 200; // On paye une seule fois
-            scoretext.text = "Score :" + score.ToString(); // On met à jour l'affichage
+            score -= 200;
+            scoretext.text =  score.ToString(); 
             
-            caca = true;       // On active les alliés
-            alliesVivants = 2; // On initialise le compteur
+            valide = true;      
+            alliesVivants = 2;
         }
         else
         {
             Debug.Log("Pas assez de points !");
         }
     }
-
-    // APPELÉE PAR COLLISION DETECTION
+    
     public void AllyHit()
     {
-        alliesVivants--; // On en perd un
+        alliesVivants--; 
 
         if (alliesVivants <= 0)
         {
-            caca = false; // Tout le monde est mort, on débloque le bouton
-            alliesVivants = 0; // Sécurité
+            valide = false; 
+            alliesVivants = 0;
         }
+    }
+    
+    public void restartLevel(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void quitGame()
+    {
+        Application.Quit();
     }
 }

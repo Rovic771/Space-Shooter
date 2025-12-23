@@ -1,5 +1,4 @@
 using System.Security.Cryptography;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class SpawnAsteroid : MonoBehaviour
@@ -33,6 +32,6 @@ public class SpawnAsteroid : MonoBehaviour
             {
             SpawnDelay -= 0.01f;
         }
-        Debug.Log("Spawn Délai: " + SpawnDelay);
+        Debug.Log("Spawn Dï¿½lai: " + SpawnDelay);
     }
 }
